@@ -1,0 +1,1145 @@
+swagger: '2.0'
+info:
+  title: 摩尔时光相关 API 接口
+  version: 1.0.0
+  description: '如果你落入狼群，它们会将你的身体肢解；如果你落入人群，他们会将你的精神肢解。'
+host: 'localhost:8998'
+basePath: /v1/moretime
+schemes:
+  - http
+
+tags:
+  - name: order
+    description: 【order】相关接口
+  - name: poster
+    description: 【poster】相关接口
+  - name: reply
+    description: 【reply】相关接口
+  - name: notification
+    description: 【通知】相关接口，没有具体实现，调用通用服务
+
+paths:
+
+  /order:
+    get:
+      tags:
+        - order
+      summary: 给出订单号，查询该订单是否存在(摩尔时光)
+      description: 查询该订单是否存在(摩尔时光)
+      operationId: get_order
+      parameters:
+        - in: body
+          name: order_get
+          description: 订单号
+          required: true
+          schema:
+            $ref: '#/definitions/OrderGet'
+      responses:
+        '200':
+          description: ""
+          schema:
+            type: object
+            required:
+              - result
+            properties:
+              result:
+                type: boolean
+                description: 订单是否存在(摩尔时光)
+                example: true
+               
+
+  /order/poster:
+    get:
+      tags: 
+        - order
+        - poster
+      summary: 从订单号进入对应的poster
+      description: 对应订单列表-查看摩尔时光
+      parameters:
+        - in: body
+          name: order_poster_get
+          description: 订单编号
+          required: true
+          schema:
+            $ref: '#/definitions/OrderGet'
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/Poster'
+  
+
+  /order/rate:
+    post:
+      tags:
+        - order
+      summary: 评分
+      description: 使用当前poster 的 order_no 进行评分
+      parameters:
+        - in: body
+          name: order_rate_post
+          description: 评分
+          required: true
+          schema:
+            $ref: '#/definitions/RatePost'
+      responses:
+        '200':
+          description: ""
+          schema:
+            type: object
+            required:
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 操作结果
+                example: true 
+
+
+  /poster:
+    get:
+      tags:
+        - poster
+      description: 获取(摩尔时光)
+      summary: 浏览指定poster_id的摩尔时光（第一部分）
+      operationId: get_poster
+      parameters:
+        - in: body
+          name: poster_get
+          description: 查看摩尔时光
+          required: true
+          schema:
+            $ref: '#/definitions/PosterGet'
+      responses:
+        '200':
+          description: ""
+          schema:
+            type: object
+            required:
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/Poster'
+    post:
+      tags:
+        - poster
+      description: 卖家发送(摩尔时光)
+      summary: "发送摩尔时光的信息内容"
+      operationId: post_poster
+      parameters:
+        - in: body
+          name: submit
+          description: 发送摩尔时光
+          required: true
+          schema:
+            $ref: '#/definitions/PosterPost'
+      responses:
+        '200':
+          description: ""
+          schema:
+            type: object
+            required:
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/PosterCreate'
+
+
+  /poster/user:
+    get:
+      tags:
+        - poster
+      summary: 她查看自己的所有的摩尔时光
+      description: 摩尔时光+评分属性，未评分先不显示
+      parameters:
+        - name: poster_user
+          in: body
+          description: 需要更新的用户信息
+          required: true
+          schema:
+            $ref: '#/definitions/PageRequest'
+      responses:
+        '200':
+          description: poster user
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                type: array
+                description: 数据记录
+                items:
+                  $ref: '#/definitions/Poster'
+
+
+  /poster/visible:
+    post:
+      tags:
+        - poster
+      description: ""
+      summary: 家长更改poster可见性
+      operationId: poster_visible
+      parameters:
+        - in: body
+          name: poster_visible
+          description: 改变摩尔时光可见性
+          required: true
+          schema:
+            $ref: '#/definitions/PosterVisible'
+      responses:
+        '200':
+          description: "change visible"
+          schema:
+            type: object
+            required:
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 是否改变成功
+                example: true
+
+
+  /poster/delete:
+    post:
+      tags:
+        - poster
+      description: 删除poster
+      summary: 卖家删除poster【预留】
+      operationId: delete_poster
+      parameters:
+        - in: body
+          name: drop
+          required: true
+          schema:
+            $ref: '#/definitions/PosterDelete'
+      responses:
+        '200':
+          description: "delete poster"
+          schema:
+            type: object
+            required:
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 是否删除成功
+                example: true
+  
+
+  /poster/share:
+    get:
+      tags:
+        - poster
+      description: https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419317332&token=&lang=zh_CN  第五
+      summary: 家长要分享poster，返回分享页的基础信息
+      operationId: share_poster
+      parameters:
+        - in: body
+          name: poster_share
+          required: true
+          schema:
+            $ref: '#/definitions/PosterGet'
+      responses:
+        '200':
+          description: "share poster"
+          schema:
+            type: object
+            required:
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/PosterShare'
+  
+
+  /poster/reply:
+    get:
+      tags:
+        - poster
+      summary: 同时获得指定poster内容和它的所有回复 分享页H5
+      description: 从分享页调用H5查看分享的poster【加入数量统计功能】
+      operationId: poster_reply
+      parameters:
+        - in: body
+          name: poster_reply
+          required: true
+          schema:
+            $ref: '#/definitions/PosterGet'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/PosterAndReply'
+
+
+  /poster/reply/download:
+    get:
+      tags:
+        - poster
+      summary: 【预留】访问者点击下载，后台记录该下载因哪个poster而激活
+      description: 只需要请求一次，前端可以不等待response，记录poster_id和系统(ios？)
+      operationId: poster_reply_download
+      parameters:
+        - in: body
+          name: poster_reply_download
+          required: true
+          schema:
+            $ref: '#/definitions/AppDownloadRecord'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            required: 
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 操作结果
+                example: true
+
+
+  /reply:
+    get:
+      tags:
+        - reply
+      description: 获取指定reply_id的评论的详细内容
+      summary: 获取指定reply_id的评论的详细内容【预留】
+      operationId: get_reply
+      parameters:
+        - in: body
+          name: obtain
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyGet'
+      responses:
+        '200':
+          description: getting reply
+          schema:
+            type: object
+            required:
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/Reply'
+
+    post:
+      tags:
+        - reply
+      description: 指定poster_id/reply_id进行评论回复 
+      summary: 发布一条评论
+      operationId: submit_reply
+      parameters:
+        - in: body
+          name: submit
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyPost'
+      responses:
+        '200':
+          description: posting reply
+          schema:
+            type: object
+            required:
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/ReplyCreate'
+
+  /reply/poster:
+    get:
+      tags:
+        - reply
+      summary: 获取指定poster的评论列表(第二部分)
+      description: 先获取poster，再获取其拥有的reply
+      parameters:
+        - in: body
+          name: reply_poster_get
+          required: true
+          schema:
+            $ref: '#/definitions/PosterGet'
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                type: array
+                description: 评论列表
+                items:
+                  $ref: '#/definitions/PosterReplyRate'
+  
+  
+  /reply/delete:
+    post:
+      tags:
+        - reply
+      description: 删除评论
+      summary: 删除指定评论【预留】
+      operationId: delete_reply
+      parameters:
+        - in: body
+          name: reply_delete
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyDelete'
+      responses:
+        '200':
+          description: delete reply
+          schema:
+            type: object
+            required: 
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 是否删除成功
+                example: true
+
+
+  /reply/user:
+    get:
+      tags:
+        - reply
+      description: 当别的用户点开“我的评论”界面，显示收到的所有reply 使用current_user_id
+      summary: 查看用户获取的所有reply
+      parameters:
+        - in: body
+          name: reply_to_user_get
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyToUserGet'
+      responses:
+        '200':
+          description: reply user
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/PosterReplyRate'
+
+  /reply/user/count:
+    get:
+      tags:
+        - reply
+      description: 当别的用户点开“我的评论”界面，显示“评论(xxx)” 数量 使用current_user_id
+      summary: 查看用户获取的所有reply的计数
+      parameters:
+        - in: body
+          name: reply_to_user_get
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyToUserGet'
+      responses:
+        '200':
+          description: reply user
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                $ref: '#/definitions/ReplyToUserCount'
+
+
+
+
+  /reply/toread:
+    get:
+      tags:
+        - notification
+      summary: 【预留】3.看护人收到评论  4. 监护人收到回复
+      description: 直接从current user id 读 user_id, 给用户发送content
+      parameters:
+        - in: body
+          name: reply_toread
+          required: true
+          schema:
+            $ref: '#/definitions/ReplyToRead'
+      responses:
+        '200':
+          description: poster toread
+          schema:
+            type: object
+            required: 
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 是否操作成功
+                example: true
+
+
+  /poster/unread/count:
+    get:
+      tags:
+        - notification
+      summary: 【预留】新的摩尔时光气泡 数值
+      description: 查询未读数量，只用user_id，调用其他接口
+      responses:
+        '200':
+          description: poster toread
+          schema:
+            type: object
+            required: 
+              - status
+              - data
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              data:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: 未读数量
+                
+
+  /poster/unread/clean:
+    get:
+      tags:
+        - notification
+      summary: 【预留】清除未读计数
+      description: 清除计数，只用user_id，调用其他接口
+      responses:
+        '200':
+          description: poster toread
+          schema:
+            type: object
+            required: 
+              - status
+              - result
+            properties:
+              status:
+                $ref: '#/definitions/Status'
+              result:
+                type: boolean
+                description: 是否操作成功
+                example: true
+                
+                
+
+definitions:
+
+  Status:
+    type: object
+    required:
+      - code
+      - msg
+    properties:
+      code:
+        description: 错误码，成功为 0
+        type: integer
+        example: 0
+      msg:
+        description: 错误信息
+        type: string
+        example: ''
+
+  PageRequest:
+    type: object
+    properties:
+      offset: 
+        type: integer
+        description: 从第几行起
+        default: -1
+      limit:
+        type: integer
+        description: 行数量
+        default: -1
+        
+  AppDownloadRecord:
+    type: object
+    properties:
+      poster_id: 
+        type: integer
+        description: poster ID 
+      phone_type:
+        type: integer
+        description: 系统
+        enum: 
+          - 0 "安卓"
+          - 1 "ios"
+          - 2 "其他"
+        example: 0
+
+  OrderGet:
+    type: object
+    description: 前端查询订单对应的摩尔时光信息
+    properties:
+      order_no:
+        type: integer
+        description: 订单号
+        example: 123456789
+
+  RatePost:
+    type: object
+    description: 为当前poster打分，poster 携带 index_id(order_no)
+    properties:
+      order_no:
+        type: integer
+        description: 订单号
+      rate:
+        type: integer
+        description: 打分
+
+  PosterPost:
+    type: object
+    description: 给数据库提交的摩尔时光数据
+    required:
+      - order_no
+      - content
+    properties:
+      order_no:
+        type: integer
+        description: 订单号
+        example: 123456789
+      content:
+        type: string
+        description: 文字内容
+        example: 你说我一个上海市委书记怎么就到了北京
+      videos_info_private:
+        type: array
+        description: 视频私有存储信息列表
+        items:
+          type: object
+          properties:
+            order_index:
+              type: integer
+              description: 媒体排序序号, 从0开始
+              example: 0
+            media:
+              $ref: '#/definitions/ObjectInfo'
+      pictures_info_private:
+        type: array
+        description: 图片私有存储信息列表
+        items:
+          type: object
+          properties:
+            order_index:
+              type: integer
+              description: 媒体排序序号
+            media:
+              $ref: '#/definitions/ObjectInfo'
+      
+
+  Poster:
+    type: object
+    description: 返回给前端展示的数据 
+    properties:
+      start_ts:
+        type: integer
+        description: 共享时间-开始时间
+        example: 1234567890
+      user:
+        $ref: '#/definitions/User'
+      poster_id:
+        type: integer
+        description: 摩尔时光ID
+        example: 1234567890
+      media_obj_list:
+        type: array
+        items:
+          $ref: '#/definitions/MoretimeMedia'
+      order_no:
+        type: integer
+        description: 订单编号
+      content:
+        type: string
+        description: 文字内容
+        example: 我说你另请高明吧
+      from_user_id:
+        type: integer
+        description: 发布poster的人
+        example: 1234567890
+      to_user_id:  
+        type: integer
+        description: 接受该poster的人
+        example: 1234567890
+      child_nickname:
+        type: string
+        description: 孩子昵称，用于显示标题/评分
+        example: 香港记者
+      is_media_public:
+        type: integer
+        description: 是否公开可见
+        example: 0  
+        enum:
+          - 0 "公众不可见"
+          - 1 "公众可见"
+      create_ts:
+        type: integer
+        description: poster 创建时间
+        example: 1234567890
+      rate:
+        type: integer
+        description: 评分，-1为未评分状态
+        example: -1
+        default: -1
+
+
+  PosterGet:
+    type: object
+    description: 前端请求一条摩尔时光所需数据
+    required:
+      - poster_id
+    properties:
+      poster_id:
+        type: integer
+        description: 摩尔时光的ID
+        example: 123456789
+      offset: 
+        type: integer
+        description: 从第几行起
+        default: null
+      limit:
+        type: integer
+        description: 行数量
+        default: null
+   
+  PosterCreate:
+    type: object
+    description: 后端反馈 生成摩尔时光 成功的信息
+    properties:
+      poster_id:
+        type: integer
+        description: 创建的摩尔时光ID
+        example: 123456789
+
+
+  PosterVisible:
+    type: object
+    description: 前端请求更新摩尔时光可见性
+    required:
+      - poster_id
+      - is_content
+      - set_visible
+    properties:
+      poster_id:
+        type: integer
+        description: 摩尔时光的ID
+        example: 123456789
+      is_content:
+        type: boolean
+        description: 是否是更新文字
+        enum:
+          - false 不是，是更新视频/图片
+          - true 是，是更新文字的可见性
+        default: false
+      set_visible:
+        type: boolean
+        description: 可见性
+        enum:
+          - false 公众不可见
+          - true 公众可见
+        default: null
+
+
+  PosterDelete:
+    type: object
+    description: 前端发请求删除摩尔时光
+    required:
+      - poster_id
+    properties:
+      poster_id:
+        type: integer
+        description: 摩尔时光的ID
+        example: 123456789
+  
+  PosterAndReply:
+    type: object
+    description: 前端预备摩尔时光分享，需要将摩尔时光设置为公开状态
+    properties:
+      poster:
+        $ref: '#/definitions/Poster'
+      reply_list:
+        type: array
+        items:
+          $ref: '#/definitions/PosterReply'
+        
+  PosterShare:
+    type: object
+    description: 前端预备摩尔时光分享，需要将摩尔时光设置为公开状态
+    properties:
+      title:
+        type: string
+        description: 标题
+      description:
+        type: string
+        description: 描述
+      webpage_url:
+        type: string
+        description: 分享页链接
+      thumb_image_url:
+        type: string
+        description: 缩略图url
+        default: ""
+
+
+  ReplyToUserGet:
+    type: object
+    description: 请求查看该人的个人主页的评论
+    properties:
+      user_id:
+        type: integer
+        description: 要求查看的个人主页
+        example: 1234567890
+      offset: 
+        type: integer
+        description: 从第几行起
+        default: null
+      limit:
+        type: integer
+        description: 行数量
+        default: null
+
+  PosterReplyRate:
+    type: object
+    description: 个人主页-评论-带评分
+    properties:
+      rate:
+        type: integer
+        description: 第一条家长的评论会附带评分，评分不为-1
+        default: -1
+      poster_id:
+        type: integer
+        description: 隶属的poster
+        example: 123456789
+      reply:
+        $ref: '#/definitions/Reply'
+      follow_reply_list:
+        type: array
+        description: 跟随的评论的评论
+        items:
+          $ref: '#/definitions/Reply'
+
+  PosterReply:
+    type: object
+    description: 作为(摩尔时光)的评论部分
+    properties:
+      poster_id:
+        type: integer
+        description: 隶属的poster
+        example: 123456789
+      reply:
+        $ref: '#/definitions/Reply'
+      follow_reply_list:
+        type: array
+        description: 跟随的评论的评论
+        items:
+          $ref: '#/definitions/Reply'
+  
+  ReplyToUserCount:
+    type: object
+    description: 评论部分的数量
+    properties:
+      count:
+        type: integer
+        description: 计数
+        example: 12
+        default: 0
+
+  
+  Reply:
+    type: object
+    description: 作为(摩尔时光)的评论部分
+    properties:
+      reply_id: 
+        type: integer
+        description: 回复id 
+        example: 123456789
+      user:
+        $ref: '#/definitions/User'
+      from_user_id:
+        type: integer
+        description: 发送评论的人
+        example: 123456789
+      to_user_id:
+        type: integer
+        description: 接收评论的人
+        example: 123456789
+      content:
+        type: string
+        description: 评论内容
+        example: 只是做了一点微小的工作，谢谢大家
+      media_obj_list:
+        type: array
+        items:
+          $ref: '#/definitions/MoretimeMedia'
+      create_ts:
+        type: integer
+        description: 创建时间
+        example: 1234567890
+
+
+  ReplyPost:
+    type: object
+    description: 提交一条评论
+    required:
+      - poster_id
+      #- to_user_id
+      - content
+    properties:
+      poster_id:
+        type: integer
+        description: 摩尔时光ID
+        example: 1234567890
+      prior_id:
+        type: integer
+        description: 前置评论的ID
+        default: -1 # 此时没有前置评论
+      content:
+        type: string
+        description: 评论内容
+        example: 这是坠吼的
+      videos_info_private:
+        type: array
+        description: 视频私有存储信息列表
+        items:
+          type: object
+          properties:
+            order_index:
+              type: integer
+              description: 媒体排序序号, 从0开始
+              example: 0
+            media:
+              $ref: '#/definitions/ObjectInfo'
+        default: null
+      pictures_info_private:
+        type: array
+        description: 图片私有存储信息列表
+        items:
+          type: object
+          properties:
+            order_index:
+              type: integer
+              description: 媒体排序序号
+            media:
+              $ref: '#/definitions/ObjectInfo'
+          default: null
+      set_visible:
+        type: boolean
+        description: 买家同时设置可见状态
+        enum:
+          - false 不可见
+          - true 可见
+        default: null
+
+
+  ReplyCreate:
+    type: object
+    description: 向前端返回成功发布的reply
+    properties:
+      reply_id:
+        type: integer
+        description: 回复ID
+        example: 1234567890
+      to_user_id:
+        type: integer
+        description: 回复目标的ID
+        example: 1234567890
+        
+  ReplyGet:
+    type: object
+    description: 前端请求一条评论数据 所需数据
+    required:
+      - reply_id
+    properties:
+      reply_id:
+        type: integer
+        description: 评论ID
+        example: 1234567890
+
+
+  ReplyDelete:
+    type: object
+    description: 前端请求删除一条评论数据
+    required:
+      - required
+    properties:
+      reply_id:
+        type: integer
+        description: 评论ID
+        example: 1234567890
+  
+  ReplyToRead:
+    type: object
+    description: 回复简讯
+    properties:
+      reply_id:
+        type: integer
+        description: 评论ID
+        example: 1234567890
+      content:
+        type: string
+        description: 评论内容
+        example: 这是坠吼的
+
+
+  User:
+    type: object
+    description: 用户实体，头像/ID/昵称
+    properties:
+      user_id:
+        type: integer
+        description: '用户 ID'
+        example: 123
+      avatar_url:
+        type: string
+        format: url
+        description: 个人头像图片 URL
+        example: 'qiniu.com/image/2018/03/11/avatar.jpg'
+      nickname:
+        type: string
+        description: '用户昵称'
+        example: '煎饼侠的姥爷'
+
+
+  ObjectInfo:
+    type: object
+    required:
+      - key
+    properties:
+      key:
+        type: string
+        description: qiniu oss key
+        example: user_id_123/avatar/2018/03/138/etag.jpg
+      mime_type:
+        type: string
+        description: 文件类型 mimeType
+        example: image/jpeg
+      etag:
+        type: string
+        description: 使用 qiniu sdk 计算的 etag
+        example: 7DsdkdFSKkdljfksQWET-TUI
+      size:
+        type: integer
+        description: 文件大小
+        example: 536123
+      persistent_id:
+        type: string
+        description: '七牛持久化操作 ID 用于查询视频转码和截图等异步操作的结果'
+        example: 'z1.5ade998d856db843bc8fe6f2'
+      width:
+        type: integer
+        description: 分辨率 宽
+        example: 1080
+      height:
+        type: integer
+        description: 分辨率 高
+        example: 1920
+      duration:
+        type: number
+        description: 播放时长
+        example: 10.0
+
+  MoretimeMedia:
+    type: object
+    properties:
+      key: 
+        type: string
+        description: qiniu oss key
+        example: user_id_123/avatar/2018/03/138/etag.jpg
+      mime_type:
+        type: string
+        description: 文件类型 mimeType
+        example: video/mp4
+      etag:
+        type: string
+        description: 使用 qiniu sdk 计算的 etag
+        example: 7DsdkdFSKkdljfksQWET-TUI
+      size:
+        type: integer
+        description: 文件大小
+        example: 536123
+      width:
+        type: integer
+        description: 分辨率 宽
+        example: 1080
+      height:
+        type: integer
+        description: 分辨率 高
+        example: 1920
+      duration:
+        type: number
+        description: 播放时长
+        example: 10.0
+        default: 0
+      cover_url:
+        type: string
+        description: qiniu oss key
+        example: moretime.cn/user_id_123/avatar/2018/03/138/etag.jpg
+      video_url:
+        type: string
+        description: qiniu oss key
+        example: moretime.cn/user_id_123/avatar/2018/03/138/etag.mp4
+      

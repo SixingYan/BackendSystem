@@ -1,0 +1,123 @@
+
+UnknownError:
+  code: 1
+  message: "Unknown Error"
+  wording: "服务器开小差了"
+
+# 参数错误
+# 1000 - 1999
+
+InvalidParameter:
+  code: 1001
+  message: "Invalid Parameter"
+  wording: "服务器开小差了"
+
+
+InvalidSignature:
+  code: 1002
+  message: "Invalid Signature"
+  wording: "服务器开小差了"
+
+Unauthorized:
+  code: 2001
+  message: "Unauthorized"
+  wording: "请先登录"
+
+# 摩尔时光相关错误
+# 8000 - 8999
+NoExistOrder:
+  code: 8001
+  message: "No Exist Order"
+  wording: "该订单号对应的订单不存在哦"
+
+
+NoExistOrderPoster:
+  code: 8002
+  message: "No Existent Order-Poster"
+  wording: "该订单号对应的摩尔时光不存在哦"
+
+
+NoExistPoster:
+  code: 8003
+  message: "No Exist Poster"
+  wording: "对应的摩尔时光不存在哦"
+
+
+NoExistReply:
+  code: 8004
+  message: "NoExistReply"
+  wording: "对应的回复不存在哦"
+
+
+MoretimePosterAlreadyExisted:
+  code: 8005
+  message: "Moretime Poster Already Existed"
+  wording: "相应的摩尔时光已经存在了哦"
+
+
+MoretimePosterSubmitFailed:
+  code: 8006
+  message: "Moretime Poster Submit Failed"
+  wording: "提交的摩尔时光失败了哦"
+
+
+MoretimeReplySubmitFailed:
+  code: 8007
+  message: "Moretime Reply Submit Failed"
+  wording: "回复评论失败了哦"
+
+
+MoretimeRateSubmitFailed:
+  code: 8008
+  message: "Moretime Rate Submit Failed"
+  wording: "评分失败了哦"
+
+
+MoretimeRateAlreadyExisted:
+  code: 8009
+  message: "Moretime Rate Already Existed"
+  wording: "评分已经存在了哦"
+
+
+InputContentError:
+  code: 8010
+  message: "Input Content Error"
+  wording: "输入的内容不能少于9个字哦"
+
+
+MoretimeOrderPosterCreateFailed:
+  code: 8011
+  message: "Moretime Order-Poster Create Failed"
+  wording: "订单-摩尔时光 对应关系创建失败，管理员正在处理，请勿重复提交摩尔时光哦"
+
+
+NoExistUser:
+  code: 8012
+  message: "No Exist User"
+  wording: "对应的用户信息不存在呢"
+
+
+MoretimeVisibleUpdateFailed:
+  code: 8013
+  message: "Moretime Visible Update Failed"
+  wording: "摩尔时光 可见性更改失败，请在反馈中给管理员留言哦"
+
+
+NoExistTimeSharing:
+  code: 8013
+  message: "No Exist Time Sharing"
+  wording: "对应的时间共享信息不存在哦"
+
+MoretimeReplyOnlyOnce:
+  code: 8014
+  message: "MoretimeReplyOnlyOnce"
+  wording: "只能回复一次哦"
+
+MoretimeAuthorityException:
+  code: 8500
+  message: "Moretime Authority Limit"
+  wording: "似乎没有权限访问这里哦"
+
+
+
+

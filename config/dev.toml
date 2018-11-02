@@ -1,0 +1,31 @@
+# API Server debug config
+[mysql]
+host = '47.94.101.97'
+port = 3306
+user = 'db'
+password = 'MoreAf_3f+X8_3hO'
+database = 'moremom'
+params = 'charset=utf8mb4'
+
+[wechat]
+    url = "https://xxxx.moremom.cn/dev/moretime/moretime.html?poster_id="
+
+[qiniu]
+access_key = "xxxx-PGXq_ZMvwujaLpn"
+secret_key = "xxxx-4qLiCNOlNJWNfvVS34"
+
+
+[qiniu.bucket]
+    [qiniu.bucket.image-avatar-test]
+        url = "http://xxxx.bkt.clouddn.com"
+    [qiniu.bucket.image-public-test]
+        url = "http://xxxx.bkt.clouddn.com"
+    
+
+[qiniu.category]
+    [qiniu.category.private]
+        url = "http://xxxx.bkt.clouddn.com"
+        bucket = "image-public-test"
+    [qiniu.category.public]
+        url = "http://xxxx.bkt.clouddn.com"
+        bucket = "image-public-test"
