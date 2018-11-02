@@ -1,9 +1,9 @@
-# 图文社交平台后端: MoreMom-Moretime 后端原型系统 （[English Version](www.baidu.com)）
+# Media-based Social Platform Backend: MoreMom-Moretime Protosystem of Backend (incompleted)（[Chinese Version](www.baidu.com)）
 该原型系统为App的摩尔时光模块服务，其中所有配置信息均已清除，仅作为参考学习使用。
 
 MoreMom App: http://www.moremom.com/
 
-## 基础
+## Basement
 #### 1. 配置
 ```Bash
 git clone https://github.com/SixingYan/MoreTime-Backend.git
@@ -15,7 +15,7 @@ pip3 install -r requirements.txt		# 安装flask依赖包
 ```
 
 
-#### 2. 写入具体参数
+#### 2. Input 
 ```Bash
 # /moretime/ 下
 vim .env
