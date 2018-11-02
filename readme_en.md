@@ -1,4 +1,4 @@
-# Media-based Social Platform Backend: MoreMom-Moretime Protosystem of Backend (incompleted)（[Chinese Version](www.baidu.com)）
+# Media-based Social Platform Backend: MoreMom-Moretime Protosystem of Backend (incompleted)（[Chinese Version](https://github.com/SixingYan/MoreTime-Backend/blob/master/readme.md)）
 该原型系统为App的摩尔时光模块服务，其中所有配置信息均已清除，仅作为参考学习使用。
 
 MoreMom App: http://www.moremom.com/
