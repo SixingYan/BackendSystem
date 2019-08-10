@@ -1,5 +1,5 @@
-# 图文社交平台后端: MoreMom-Moretime 后端原型系统 （[English Version](https://github.com/SixingYan/MoreTime-Backend/blob/master/readme_en.md)）
-该原型系统为App的摩尔时光模块服务，其中所有配置信息均已清除，仅作为参考学习使用。
+# 图文社交平台后端原型系统 （[English Version](https://github.com/SixingYan/MoreTime-Backend/blob/master/readme_en.md)）
+该原型系统为App的社交模块服务，其中所有配置信息均已清除，仅作为参考学习使用。
 
 MoreMom App: http://www.moremom.com/
 
